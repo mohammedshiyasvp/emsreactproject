@@ -1,0 +1,44 @@
+MVC(MODEL VIEW CONTROLLER):-
+---------------------------------
+Routes - it contains all the paths of each request
+Controllers - Inside the controllers we give the logic need for the project
+
+dotenv - for connecting env file to landing page i.e index.js
+
+ENVIRONMENTAL VARIABLE:-
+---------------------------------
+- Variable that contain application configurations that it need in the time of running
+
+- Handling Module - process
+
+- it will convert static working ap into dynamic [local host running to server running]
+
+MULTER:-
+------------
+Library used to handle file type datas in server
+
+// import multer
+const multer=require('multer')
+// set storage
+const storage=multer.diskStorage({
+    destination:(req,file,callback)=>{
+        callback(null,'./uploads')
+    },
+    filename:(req,file,callback)=>{
+        callback(null,`image-${Date.now()}-${file.originalname}`)
+    }
+})
+// file filtering
+const fileFilter=(req,file,callback)=>{
+    if(file.mimetype=='image/png' || file.mimetype=='image/jpg' || file.mimetype=='image/jpeg'){
+        callback(null,true)
+    }
+    else{
+        callback(null,false)
+        return callback(new Error('only accepts png/jpg/jpeg format files'))
+    }
+}
+// upload
+const upload=multer({storage,fileFilter})
+
+module.exports=upload
